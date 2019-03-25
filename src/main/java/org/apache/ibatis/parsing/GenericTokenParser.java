@@ -19,8 +19,13 @@ package org.apache.ibatis.parsing;
  * @author Clinton Begin
  */
 public class GenericTokenParser {
-
+  /**
+   * 开始的 token 字符串
+   */
   private final String openToken;
+  /**
+   * 结束的 token 字符串
+   */
   private final String closeToken;
   private final TokenHandler handler;
 
@@ -34,7 +39,10 @@ public class GenericTokenParser {
     if (text == null || text.isEmpty()) {
       return "";
     }
-    // search open token
+    // search open
+    /**
+     * 搜寻开始的token字符串
+     */
     int start = text.indexOf(openToken);
     if (start == -1) {
       return text;

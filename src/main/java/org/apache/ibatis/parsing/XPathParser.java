@@ -44,11 +44,25 @@ import org.xml.sax.SAXParseException;
  * @author Kazuki Shimizu
  */
 public class XPathParser {
-
+  /**
+   * 文档对象
+   */
   private final Document document;
+  /**
+   * 是否校验
+   */
   private boolean validation;
+  /**
+   * 实体解析器
+   */
   private EntityResolver entityResolver;
+  /**
+   * property变量
+   */
   private Properties variables;
+  /**
+   * java xpath 对象
+   */
   private XPath xpath;
 
   public XPathParser(String xml) {
@@ -111,6 +125,13 @@ public class XPathParser {
     this.document = document;
   }
 
+  /**
+   * 构造xpathparser对象
+   * @param xml 文档地址
+   * @param validation 是否校验
+   * @param variables 变量对象
+   * @param entityResolver 实体解析器
+   */
   public XPathParser(String xml, boolean validation, Properties variables, EntityResolver entityResolver) {
     commonConstructor(validation, variables, entityResolver);
     this.document = createDocument(new InputSource(new StringReader(xml)));
@@ -218,6 +239,13 @@ public class XPathParser {
     return new XNode(this, node, variables);
   }
 
+  /**
+   * 获取指定元素或节点的值
+   * @param expression
+   * @param root
+   * @param returnType
+   * @return
+   */
   private Object evaluate(String expression, Object root, QName returnType) {
     try {
       return xpath.evaluate(expression, root, returnType);
@@ -226,6 +254,11 @@ public class XPathParser {
     }
   }
 
+  /**
+   * 私有方法，根据xml转换为document对象
+   * @param inputSource
+   * @return
+   */
   private Document createDocument(InputSource inputSource) {
     // important: this must only be called AFTER common constructor
     try {
@@ -265,6 +298,10 @@ public class XPathParser {
     this.validation = validation;
     this.entityResolver = entityResolver;
     this.variables = variables;
+    /**
+     * 创建xpath工厂对象
+     * 进而创建xpath对象
+     */
     XPathFactory factory = XPathFactory.newInstance();
     this.xpath = factory.newXPath();
   }
